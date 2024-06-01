@@ -23,4 +23,23 @@
             <tr>
                 <td>{{ $pembelian->nomor_pembelian }}</td>
                 <td>{{ $pembelian->tanggal }}</td>
-                <td>{{ $pemb
+                <td>{{ $pembelian->kode_barang }}</td>
+                <td>{{ $pembelian->satuan }}</td>
+                <td>{{ $pembelian->qty }}</td>
+                <td>{{ $pembelian->harga }}</td>
+                <td>{{ $pembelian->diskon }}</td>
+                <td>{{ $pembelian->subtotal }}</td>
+                <td>
+                    <a href="{{ route('pembelians.edit', $pembelian->id) }}" class="btn btn-warning">Edit</a>
+                    <form action="{{ route('pembelians.destroy', $pembelian->id) }}" method="POST" class="d-inline">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger">Hapus</button>
+                    </form>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div>
+@endsection
