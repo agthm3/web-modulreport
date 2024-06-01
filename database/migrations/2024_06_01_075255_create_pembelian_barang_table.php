@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('nomor_pembelian');
             $table->date('tanggal');
             $table->unsignedBigInteger('kode_barang');
-            $table->foreign('kode_barang')->references('kode_barang')->on('master_barang');
+            $table->foreign('kode_barang')->references('id')->on('master_barang');
             $table->string('satuan');
             $table->integer('qty');
             $table->decimal('harga', 10, 2);
@@ -25,6 +25,7 @@ return new class extends Migration
             $table->timestamps();
         });
     }
+    
     
 
     /**
