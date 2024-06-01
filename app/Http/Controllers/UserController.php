@@ -22,18 +22,17 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
+            'email' => 'required|email|unique:users',
+            'name' => 'required',
+            'password' => 'required|min:6',
             'role' => 'required|in:Admin,User',
         ]);
 
         User::create([
-            'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($request->password),
+            'name' => $request->name,
+            'password' => bcrypt($request->password),
             'role' => $request->role,
-            'last_login' => null,
         ]);
 
         return redirect()->route('users.index')->with('success', 'User created successfully.');
@@ -47,19 +46,16 @@ class UserController extends Controller
     public function update(Request $request, User $user)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users,email,' . $user->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'name' => 'required',
             'role' => 'required|in:Admin,User',
         ]);
 
-        $user->update([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => $request->password ? Hash::make($request->password) : $user->password,
-            'role' => $request->role,
-        ]);
+        if ($request->password) {
+            $user->password = bcrypt($request->password);
+        }
 
+        $user->update($request->only('email', 'name', 'role'));
         return redirect()->route('users.index')->with('success', 'User updated successfully.');
     }
 
