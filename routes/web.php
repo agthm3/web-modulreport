@@ -9,8 +9,9 @@ use App\Http\Controllers\PembelianController;
 Route::middleware(['auth'])->group(function () {
     Route::resource('barangs', BarangController::class);
     Route::resource('pembelians', PembelianController::class);
+    Route::post('/barangs/import', [BarangController::class, 'import'])->name('barangs.import');
+    Route::get('/report/pdf', [PembelianController::class, 'report'])->name('report.pdf');
 });
-
 
 Route::get('/', function () {
     return view('welcome');
