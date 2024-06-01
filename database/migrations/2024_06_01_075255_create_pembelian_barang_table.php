@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('pembelians', function (Blueprint $table) {
+        Schema::create('pembelian_barang', function (Blueprint $table) {
             $table->id();
             $table->string('nomor_pembelian');
             $table->date('tanggal');
-            $table->string('kode_barang');
+            $table->unsignedBigInteger('kode_barang');
+            $table->foreign('kode_barang')->references('kode_barang')->on('master_barang');
             $table->string('satuan');
             $table->integer('qty');
             $table->decimal('harga', 10, 2);
@@ -25,12 +26,12 @@ return new class extends Migration
         });
     }
     
-    
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('pembelians');
+        Schema::dropIfExists('pembelian_barang');
     }
 };

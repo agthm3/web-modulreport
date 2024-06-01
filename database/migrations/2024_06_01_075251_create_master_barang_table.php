@@ -11,9 +11,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('barangs', function (Blueprint $table) {
-            $table->id();
-            $table->string('kode_barang')->unique();
+        Schema::create('master_barang', function (Blueprint $table) {
+            $table->id('kode_barang');
             $table->string('nama_barang');
             $table->string('satuan');
             $table->integer('qty');
@@ -22,11 +21,12 @@ return new class extends Migration
         });
     }
     
+
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('barangs');
+        Schema::dropIfExists('master_barang');
     }
 };
